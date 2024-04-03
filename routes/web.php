@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,9 +20,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -45,3 +46,13 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/',[HomeController::class,'Index']);
+
+Route::get('/dashboard',[HomeController::class,'Dashboard'])->name('dashboard');
+
+
+Route::get('/create/post',[PostController::class,'CreatePost'])->name('create.post');
+Route::post('/store/post',[PostController::class,'StorePost'])->name('store.post');
+
+Route::get('/all/post',[PostController::class,'AllPost'])->name('all.post');
+
+Route::get('/view/post',[PostController::class,'ViewPost'])->name('view.post');

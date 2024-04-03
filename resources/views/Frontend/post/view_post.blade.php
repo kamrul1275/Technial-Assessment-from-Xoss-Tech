@@ -21,9 +21,31 @@
 
 <!-- header end -->
 
+<div class="container">
+
+<div class="row">
+    <div class="col-md-12"> 
+        
+
+
 <div class="main">
 
-@yield('content')
+<div class="card" style="width: 18rem;">
+  <img src="{{asset('Image/bd.png')}}" class="card-img-top" style="height: 200px; width:200px;" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">POST title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+    <a href="#" class="btn btn-primary">Submit</a>
+  </div>
+</div>
+</div>
+
+
+
+</div>
+    
+</div>
 </div>
 
 <!-- footer start -->
