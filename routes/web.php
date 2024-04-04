@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,7 +46,7 @@ require __DIR__.'/auth.php';
 // Home Start
 
 
-Route::get('/',[HomeController::class,'Index']);
+Route::get('/',[HomeController::class,'Index'])->name('home.index');
 
 Route::get('/dashboard',[HomeController::class,'Dashboard'])->name('dashboard');
 
@@ -55,4 +56,5 @@ Route::post('/store/post',[PostController::class,'StorePost'])->name('store.post
 
 Route::get('/all/post',[PostController::class,'AllPost'])->name('all.post');
 
-Route::get('/view/post',[PostController::class,'ViewPost'])->name('view.post');
+Route::get('/view/post/{id}',[CommentController::class,'ViewPost'])->name('view.post');
+Route::post('/store/comment',[CommentController::class,'storeComment'])->name('store.comment');

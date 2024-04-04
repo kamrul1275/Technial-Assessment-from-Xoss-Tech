@@ -30,15 +30,28 @@
 
 <div class="main">
 
+@foreach ($viewData as $iteam)
+
+
+
 <div class="card" style="width: 18rem;">
   <img src="{{asset('Image/bd.png')}}" class="card-img-top" style="height: 200px; width:200px;" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">POST title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-    <a href="#" class="btn btn-primary">Submit</a>
+<form action="{{route('store.comment') }}" method="post">
+@csrf
+
+<div class="card-body">
+  <input type="hidden" name="post_id">
+    <h5 class="card-title">{{$iteam->title ?? ""}}</h5>
+    <p class="card-text">{{$iteam->content ?? ""}}</p>
+    <textarea class="form-control" name="commentarea" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+    <button type="submit" class="btn btn-primary">Submit</button>
   </div>
+</form>
 </div>
+  
+@endforeach
+
+
 </div>
 
 

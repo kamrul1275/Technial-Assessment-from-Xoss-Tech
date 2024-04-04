@@ -24,40 +24,80 @@
 <div class="container">
 
 <div class="row">
+
+
+<form class="d-flex">
+     <input class="form-control me-2" name="search" value="{{ $search }}" type="search" placeholder="Search" aria-label="Search">
+     <button class="btn btn-outline-success"  type="submit">Search</button>
+   </form>
+
+
+
     <div class="col-md-12"> 
         
 
 
 
 <h3 class="text-center">All Post</h3>
+<a href="{{route('create.post')}}" class="btn btn-primary">Add Post</a>
 
     <table class="table">
   <thead>
     <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
+      <th scope="col">No</th>
+      <th scope="col">Title</th>
+      <th scope="col">Content</th>
+      <th scope="col">Image</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
+
+  @if(count($published) > 0)
+    <!-- Display search value if provided -->
+    @if($search)
+        <p>Search value: {{ $search }}</p>
+    @endif
+    
+    <!-- Display posts -->
+    <ul>
+        @foreach($published as $post)
+            <li>{{ $post->title }}</li>
+            <!-- Display other post details if needed -->
+        @endforeach
+    </ul>
+@else
+    <p>No posts found.</p>
+@endif
+
+
+<!-- post -->
+
+@foreach ($posts as $key=>$post)
+
+
+<tr>
+    <th scope="row">{{$key+1}}</th>
+    <td>{{$post->title}}</td>
+    <td>{{$post->content}}</td>
+    <td>  
+    <img src="{{ url('public/Image/'.$post->image) }}" style="width: 70px; height: 40px;">
+  
+    </td>
+   
+    <td>
+    <a href="{{ route('view.post',$post->id)}}" class="btn btn-info">View</a>
+    <a href="" class="btn btn-success">Edit</a>
+    <a href="" class="btn btn-danger">Delete</a>
+
+    </td>
+  </tr>
+
+  
+  
+@endforeach
+
+
   </tbody>
 </table>
 

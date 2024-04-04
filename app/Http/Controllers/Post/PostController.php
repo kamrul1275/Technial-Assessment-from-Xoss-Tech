@@ -15,14 +15,24 @@ return view('frontend.post.create_post');
     }//end method
 
 
-    function AllPost(){
-        return view('frontend.post.all_post');
+    function AllPost(Request $request){
+
+
+        $search = $request['search'] ?? "";
+        if($search !=""){
+
+            $published = Post::where('title','LIKE',"%$search%")->orwhere('title','LIKE',"%$search%")->get();
+        }else{
+
+            $published = "nothing found";
+
+        }
+  //dd($search);
+        $posts =Post::latest()->get();
+        return view('frontend.post.all_post',compact('posts','search'));
     }//end method
 
 
-    function ViewPost(){
-        return view('frontend.post.view_post');
-    }
 
 
     public function StorePost(Request $request )
@@ -56,7 +66,7 @@ return view('frontend.post.create_post');
     ///dd($postData);
     $notification= array(
 
-          'message'=>'Post Create Succesfully tostar',
+          'message'=>'Post Create Succesfully',
           'alert-type'=>'success',
 );
 
@@ -73,7 +83,10 @@ return view('frontend.post.create_post');
    {
    $postDelete = Post::find($id);
    $postDelete->delete();
-   return redirect()->back();
+   return redirect()->back(); //end method
+
    }
+
+   
 
 }

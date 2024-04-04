@@ -30,8 +30,8 @@
    <div class="col-md-5 py-3">
 
    <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <input class="form-control me-2" name="search" value="{{ $search }}" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success"  type="submit">Search</button>
       </form>
 
 
@@ -52,21 +52,45 @@
       <th scope="col">No</th>
       <th scope="col">Title</th>
       <th scope="col">Content</th>
+      <th scope="col">Image</th>
       <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
+
+
+  @foreach ($posts as $key=>$post)
+
+
+  <tr>
+      <th scope="row">{{$key+1}}</th>
+      <td>{{$post->title}}</td>
+      <td>{{$post->content}}</td>
+      <td>  
+      <img src="{{ url('public/Image/'.$post->image) }}" style="width: 70px; height: 40px;">
+    
+      </td>
+     
       <td>
-<a href="{{ route('view.post')}}" class="btn btn-info">View</a>
-<a href="" class="btn btn-success">Edit</a>
-<a href="" class="btn btn-danger">Delete</a>
+      <a href="{{ route('view.post')}}" class="btn btn-info">View</a>
+      <a href="" class="btn btn-success">Edit</a>
+      <a href="" class="btn btn-danger">Delete</a>
 
       </td>
     </tr>
+
+    
+    
+  @endforeach
+
+
+  @if($search)
+    <p>Search value: {{ $search }}</p>
+@endif
+
+
+
+
  
   </tbody>
 </table>
