@@ -30,26 +30,46 @@
 
 <div class="main">
 
-@foreach ($viewData as $iteam)
-
-
-
-<div class="card" style="width: 18rem;">
-  <img src="{{asset('Image/bd.png')}}" class="card-img-top" style="height: 200px; width:200px;" alt="...">
-<form action="{{route('store.comment') }}" method="post">
-@csrf
-
-<div class="card-body">
-  <input type="hidden" name="post_id">
-    <h5 class="card-title">{{$iteam->title ?? ""}}</h5>
-    <p class="card-text">{{$iteam->content ?? ""}}</p>
-    <textarea class="form-control" name="commentarea" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </div>
-</form>
-</div>
+  @foreach ($posts as $post)
+  <div class="card" style="width: 18rem;">
+    <img src="{{ asset('Image/bd.png') }}" class="card-img-top" style="height: 200px; width:200px;" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{ $post->title ?? "" }}</h5>
+      <p class="card-text">{{ $post->content ?? "" }}</p>
   
-@endforeach
+      {{-- Display comments for this post --}}
+      <ul>
+        @foreach ($comments as $comment)
+        <li>
+          <p>{{ $comment->commentarea }}</p>
+          <p>By: {{ $comment->user->name }}</p>
+        </li>
+        @endforeach
+      </ul>
+  
+      <form action="{{ route('store.comment',$comment->id) }}" method="post">
+        @csrf
+        <div class="form-group">
+          <input type="hidden" name="post_id" value="{{ $comment->id }}">
+          <textarea class="form-control" name="comment" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+  @endforeach
+  
+
+
+{{-- @foreach ($comments as $comment)
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ $comment->user->name }}</h5>
+        <p class="card-text">{{ $comment->comment }}</p>
+    </div>
+</div>
+@endforeach --}}
+
 
 
 </div>

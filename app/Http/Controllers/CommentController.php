@@ -12,15 +12,17 @@ class CommentController extends Controller
 {
     function ViewPost($id){
 
-        $viewData = Post::find($id);
-       // dd($viewData);
-        return view('frontend.post.view_post',compact('viewData'));
+      
+       $posts = Post::findOrFail($id);
+       $comments = $posts->comment()->with('user')->get(); // Assuming you have a relationship between posts and comments
+       //return view('your_view', compact('post', 'comments'));
+        return view('frontend.post.view_post',compact('posts', 'comments'));
     }
 
 
 
 
-    public function storeComment(Request $request )
+    public function storeComment(Request $request,$id )
    {
     $validated = $request->validate([
         'commentarea' => 'required',
@@ -31,11 +33,7 @@ class CommentController extends Controller
     $postData->commentarea =$request->commentarea;
     $postData->user_id =Auth::user()->id;
     $postData->post_id =$request->post_id;
-
-  //  dd($request->post_id);
-
     $postData->save();
-
     $notification= array(
 
           'message'=>'Comment Create Succesfully',

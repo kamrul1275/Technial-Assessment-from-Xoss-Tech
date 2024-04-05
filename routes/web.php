@@ -63,8 +63,19 @@ Route::post('/store/post',[PostController::class,'StorePost'])->name('store.post
 
 Route::get('/all/post',[PostController::class,'AllPost'])->name('all.post');
 
+Route::get('/edit/post/{id}',[PostController::class,'postEdit'])->name('edit.post'); 
+
+Route::post('/update/post/{id}',[PostController::class,'updatePost'])->name('update.post'); 
+
+
+Route::get('/delete/post/{id}',[PostController::class,'postDelete'])->name('delete.post');
+
+
+
+
 Route::get('/view/post/{id}',[CommentController::class,'ViewPost'])->name('view.post');
-Route::post('/store/comment',[CommentController::class,'storeComment'])->name('store.comment');
+
+Route::post('/store/comment/{id}',[CommentController::class,'storeComment'])->name('store.comment');
 
 
 
