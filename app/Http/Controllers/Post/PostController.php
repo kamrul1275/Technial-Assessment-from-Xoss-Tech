@@ -19,17 +19,15 @@ return view('frontend.post.create_post');
 
 
         $search = $request['search'] ?? "";
-        if($search !=""){
-
-            $published = Post::where('title','LIKE',"%$search%")->orwhere('title','LIKE',"%$search%")->get();
-        }else{
-
-            $published = "nothing found";
-
+        if($search !== "") {
+            $published = Post::where('title', 'LIKE', "%$search%")->orWhere('title', 'LIKE', "%$search%")->get();
+        } else {
+            $published = []; // Initialize an empty array if no posts are found
         }
-  //dd($search);
-        $posts =Post::latest()->get();
-        return view('frontend.post.all_post',compact('posts','search'));
+    
+        // dd($search);
+       $posts = Post::latest()->get();
+        return view('frontend.post.all_post',compact('published','search','posts'));
     }//end method
 
 

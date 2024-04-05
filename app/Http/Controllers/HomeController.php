@@ -17,8 +17,8 @@ class HomeController extends Controller
         }
     
         // dd($search);
-        $posts = Post::latest()->get();
-        // return view('frontend.post.all_post', compact('posts', 'search', 'published'));
+       $posts = Post::latest()->get();
+     
         return view('Frontend.home',compact('published','search','posts'));
     }//end method
 

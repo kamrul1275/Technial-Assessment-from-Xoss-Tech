@@ -20,90 +20,94 @@
 @include('Frontend.page.header')
 
 <!-- header end -->
-<h3 class="text-center">All Post</h3>
-
-<div class="container">
-<a href="{{route('create.post')}}" class="btn btn-primary">Add Post</a>
-
-    <div class="row">
-   
-   <div class="col-md-5 py-3">
-
-   <form class="d-flex">
-        <input class="form-control me-2" name="search" value="{{ $search }}" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success"  type="submit">Search</button>
-      </form>
-
-
-   </div>
-   <div class="col-md-7"></div>
-
-    </div>
-</div>
 
 <div class="container">
 
 <div class="row">
-    <div class="col-md-12"> 
-        
-    <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">No</th>
-      <th scope="col">Title</th>
-      <th scope="col">Content</th>
-      <th scope="col">Image</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
 
 
-  @foreach ($posts as $key=>$post)
+  <form class="d-flex">
+      <input class="form-control me-2" name="search" value="{{ $search }}" type="search"
+          placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
 
 
-  <tr>
-      <th scope="row">{{$key+1}}</th>
-      <td>{{$post->title}}</td>
-      <td>{{$post->content}}</td>
-      <td>  
-      <img src="{{ url('public/Image/'.$post->image) }}" style="width: 70px; height: 40px;">
-    
-      </td>
-     
-      <td>
-      <a href="{{ route('view.post')}}" class="btn btn-info">View</a>
-      <a href="" class="btn btn-success">Edit</a>
-      <a href="" class="btn btn-danger">Delete</a>
+  <div class="col-md-12">
 
-      </td>
-    </tr>
+      <h3 class="text-center">All Post</h3>
+      <a href="{{ route('create.post') }}" class="btn btn-primary">Add Post</a>
 
-    
-    
-  @endforeach
+      <table class="table">
+          <thead>
+              <tr>
+                  <th scope="col">No</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Content</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Action</th>
+              </tr>
+          </thead>
+          <tbody>
 
-
-  @if($search)
-    <p>Search value: {{ $search }}</p>
-@endif
+              @if (count($published) > 0)
+                  <!-- Display search value if provided -->
+                  @if ($search)
+                      <p>Search value: {{ $search }}</p>
+                  @endif
 
 
+                  @foreach ($published as $key => $post)
+                      <tr>
+                          <th scope="row">{{ $key + 1 }}</th>
+                          <td>{{ $post->title }}</td>
+                          <td>{{ $post->content }}</td>
+                          <td>
+                              <img src="{{ url('public/Image/' . $post->image) }}"
+                                  style="width: 70px; height: 40px;">
+
+                          </td>
+
+                          <td>
+                              <a href="{{ route('view.post', $post->id) }}" class="btn btn-info">View</a>
 
 
- 
-  </tbody>
-</table>
+                          </td>
+                      </tr>
+                  @endforeach
+              @else
+                  <p>No posts found.</p>
+              @endif 
 
 
+              <!-- post -->
 
+              @foreach ($posts as $key => $post)
+                  <tr>
+                      <th scope="row">{{ $key + 1 }}</th>
+                      <td>{{ $post->title }}</td>
+                      <td>{{ $post->content }}</td>
+                      <td>
+                          <img src="{{ url('public/Image/' . $post->image) }}"
+                              style="width: 70px; height: 40px;">
 
+                      </td>
+
+                      <td>
+                          <a href="{{ route('view.post', $post->id) }}" class="btn btn-info">View</a>
+                          <a href="" class="btn btn-success">Edit</a>
+                          <a href="" class="btn btn-danger">Delete</a>
+
+                      </td>
+                  </tr>
+              @endforeach
+          </tbody>
+      </table>
+  </div>
 
 </div>
-    
-</div>
-</div>
 
+</div>
 <!-- footer start -->
 
 <div class="card">

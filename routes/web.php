@@ -4,6 +4,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
+
+
+use App\Http\Controllers\Backend\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -48,6 +51,10 @@ require __DIR__.'/auth.php';
 
 Route::get('/',[HomeController::class,'Index'])->name('home.index');
 
+
+// middleare used
+Route::middleware(['auth'])->group(function(){
+
 Route::get('/dashboard',[HomeController::class,'Dashboard'])->name('dashboard');
 
 
@@ -58,3 +65,28 @@ Route::get('/all/post',[PostController::class,'AllPost'])->name('all.post');
 
 Route::get('/view/post/{id}',[CommentController::class,'ViewPost'])->name('view.post');
 Route::post('/store/comment',[CommentController::class,'storeComment'])->name('store.comment');
+
+
+
+});
+
+
+// Admin part strat
+
+
+Route::get('/admin/login',[AdminController::class,'AdminLogin'])->name('admin.login');
+
+Route::post('/admin/login',[AdminController::class,'AdminLogin'])->name('admin.login.store');
+
+
+Route::group(['middleware' => ['admin']], function () {
+
+
+    Route::get('/admin/dashboard',[AdminController::class,'AdminDashboard'])->name('admin.dashboard');
+
+
+    Route::get('/admin/logout',[AdminController::class,'AdminLogout'])->name('admin.logout');
+});
+
+
+
